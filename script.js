@@ -20,8 +20,9 @@ const GAMEOVER = 2;
 var spelStatus = SPELEN;
 
 var spelerX = 600; // x-positie van speler
-var spelerY = 600; // y-positie van speler
+var spelerY = 350; // y-positie van speler
 var health = 100;  // health van speler
+var speed = 2;     // snelheid van speler
 
 /* ********************************************* */
 /* functies die je gebruikt in je game           */
@@ -57,17 +58,24 @@ var verwerkBotsing = function() {
  */
 var tekenAlles = function() {
   // achtergrond
-
+  background ("green")
   // vijand
 
   // kogel
 
   // speler
-  fill("white");
-  rect(spelerX - 25, spelerY - 25, 50, 50);
-  fill("black");
-  ellipse(spelerX, spelerY, 10, 10);
+  fill("#4000FF");
+  rect(spelerX - 75, spelerY - 25, 150, 50);
 
+  if (keyIsDown(LEFT_ARROW)) 
+    {spelerX = spelerX - speed; }
+  if (keyIsDown(RIGHT_ARROW))
+    {spelerX = spelerX + speed;}
+  if (keyIsDown(UP_ARROW))
+    {spelerY = spelerY - speed}
+  if (keyIsDown(DOWN_ARROW))
+    {spelerY = spelerY + speed}
+  
   // punten en health
 
 };
@@ -86,7 +94,7 @@ function setup() {
   createCanvas(1280, 720);
 
   // Kleur de achtergrond blauw, zodat je het kunt zien
-  background('blue');
+  background('green');
 }
 
 /**
