@@ -19,9 +19,11 @@ const SPELEN = 1;
 const GAMEOVER = 2;
 var spelStatus = SPELEN;
 
-var spelerX = 600; // x-positie van speler
-var spelerY = 350; // y-positie van speler
-var health = 100;  // health van speler
+var spelerAX = 600; // x-positie van speler 1
+var spelerAY = 350; // y-positie van speler 1
+var spelerBX = 600; // x-positie van speler 2
+var spelerBY = 350; // y-positie van speler 2
+var health = 3;    // health van speler
 var speed = 2;     // snelheid van speler
 
 /* ********************************************* */
@@ -60,21 +62,31 @@ var tekenAlles = function() {
   // achtergrond
   background ("green")
   // vijand
+  fill("#000000");
+  rect(spelerBX - 75, spelerBY - 25, 150, 50);
 
+  if (keyIsDown(65)) 
+    {spelerBX = spelerBX - speed; }
+  if (keyIsDown(68))
+    {spelerBX = spelerBX + speed;}
+  if (keyIsDown(87))
+    {spelerBY = spelerBY - speed}
+  if (keyIsDown(83))
+    {spelerBY = spelerBY + speed}
   // kogel
 
   // speler
   fill("#4000FF");
-  rect(spelerX - 75, spelerY - 25, 150, 50);
+  rect(spelerAX - 75, spelerAY - 25, 150, 50);
 
   if (keyIsDown(LEFT_ARROW)) 
-    {spelerX = spelerX - speed; }
+    {spelerAX = spelerAX - speed; }
   if (keyIsDown(RIGHT_ARROW))
-    {spelerX = spelerX + speed;}
+    {spelerAX = spelerAX + speed;}
   if (keyIsDown(UP_ARROW))
-    {spelerY = spelerY - speed}
+    {spelerAY = spelerAY - speed}
   if (keyIsDown(DOWN_ARROW))
-    {spelerY = spelerY + speed}
+    {spelerAY = spelerAY + speed}
   
   // punten en health
 
