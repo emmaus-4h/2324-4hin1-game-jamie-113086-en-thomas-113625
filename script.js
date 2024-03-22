@@ -20,9 +20,9 @@ const GAMEOVER = 2;
 var spelStatus = SPELEN;
 
 var spelerAX = 600; // x-positie van speler 1
-var spelerAY = 350; // y-positie van speler 1
+var spelerAY = 300; // y-positie van speler 1
 var spelerBX = 600; // x-positie van speler 2
-var spelerBY = 350; // y-positie van speler 2
+var spelerBY = 400; // y-positie van speler 2
 var health = 3;    // health van speler
 var speed = 2;     // snelheid van speler
 
@@ -48,7 +48,13 @@ var beweegAlles = function() {
  */
 var verwerkBotsing = function() {
   // botsing speler tegen vijand
-
+  if (spelerAX - spelerBX <150 &&
+      spelerAX - spelerBX >-150 &&
+      spelerAY - spelerBY <50 &&
+      spelerAY - spelerBY >-50)
+  {console.log ("Botsing");
+  }
+  
   // botsing kogel tegen vijand
 
   // update punten en health
