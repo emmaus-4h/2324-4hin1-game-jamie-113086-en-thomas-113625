@@ -48,13 +48,16 @@ var beweegAlles = function() {
  */
 var verwerkBotsing = function() {
   // botsing speler tegen vijand
-  if (spelerAX - spelerBX <150 &&
+if (spelerAX - spelerBX <150 &&
       spelerAX - spelerBX >-150 &&
       spelerAY - spelerBY <50 &&
       spelerAY - spelerBY >-50)
   { var Botsing = true;
     console.log ("Botsing"); }
   
+  {console.log ("Botsing");
+  }
+ 
   // botsing kogel tegen vijand
 
   // update punten en health
@@ -131,6 +134,10 @@ function draw() {
     }
   }
   if (spelStatus === GAMEOVER) {
+    textSize(50);
+    fill(white); 
+    text("game over" ,500, 300);
+    console.log ("game over")
     // teken game-over scherm
   }
 }
