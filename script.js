@@ -52,15 +52,14 @@ var verwerkBotsing = function() {
       spelerAX - spelerBX >-150 &&
       spelerAY - spelerBY <50 &&
       spelerAY - spelerBY >-50)
-  {console.log ("Botsing");
-  }
+  { var Botsing = true;
+    console.log ("Botsing"); }
   
   // botsing kogel tegen vijand
 
   // update punten en health
 
 };
-
 /**
  * Tekent spelscherm
  */
@@ -95,7 +94,9 @@ var tekenAlles = function() {
     {spelerAY = spelerAY + speed}
   
   // punten en health
-
+  fill("white");
+  textSize(30);
+  text("Health: " + health, 10, 30)
 };
 
 /* ********************************************* */
