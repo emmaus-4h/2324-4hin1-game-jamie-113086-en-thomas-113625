@@ -48,7 +48,7 @@ var beweegAlles = function() {
  */
 var verwerkBotsing = function() {
   // botsing speler tegen vijand
-
+  
   // botsing kogel tegen vijand
 
   // update punten en health
