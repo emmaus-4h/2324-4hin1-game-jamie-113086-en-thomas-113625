@@ -17,7 +17,8 @@
 /* ********************************************* */
 const SPELEN = 1;
 const GAMEOVER = 2;
-var spelStatus = SPELEN;
+const UITLEG = 3;
+var spelStatus = UITLEG;
 
 var spelerAX = 600; // x-positie van speler 1
 var spelerAY = 300; // y-positie van speler 1
@@ -25,6 +26,7 @@ var spelerBX = 600; // x-positie van speler 2
 var spelerBY = 400; // y-positie van speler 2
 var health = 3;    // health van speler
 var speed = 2;     // snelheid van speler
+var crash = false; // of de speler crasht
 
 /* ********************************************* */
 /* functies die je gebruikt in je game           */
@@ -52,11 +54,11 @@ if (spelerAX - spelerBX <150 &&
       spelerAX - spelerBX >-150 &&
       spelerAY - spelerBY <50 &&
       spelerAY - spelerBY >-50)
-  { var Botsing = true;
+  {crash = true;
     console.log ("Botsing"); }
-  
-  {console.log ("Botsing");
-  }
+else {crash = false;
+        console.log ("Geen botsing")
+     }
  
   // botsing kogel tegen vijand
 
@@ -129,15 +131,34 @@ function draw() {
     beweegAlles();
     verwerkBotsing();
     tekenAlles();
-    if (health <= 0) {
+    if (crash === true) {
       spelStatus = GAMEOVER;
     }
   }
   if (spelStatus === GAMEOVER) {
-    textSize(50);
-    fill(white); 
-    text("game over" ,500, 300);
+    background("red");
+    textSize(100);
+    fill("white"); 
+    text("Crashed!!" ,400, 300);
+    text("Press enter to restart", 200, 500);
     console.log ("game over")
     // teken game-over scherm
+  if (keyIsDown(ENTER)) {
+    spelStatus = UITLEG;
+    }
+  }
+  if (spelStatus === UITLEG) {
+    background("#701010");
+    textSize(100);
+    fill("white");
+    text("'Uitleg'" ,500 ,300)
+    text("Press shift to start" ,250 ,600)
+  }
+  if (keyIsDown(16)) {
+    spelerAX = 600;
+    spelerAY = 300;
+    spelerBX = 600;
+    spelerBY = 400;
+    spelStatus = SPELEN;
   }
 }
