@@ -49,7 +49,7 @@ var beweegAlles = function() {
  * Updatet globale variabelen punten en health
  */
 var verwerkBotsing = function() {
-  // botsing speler tegen vijand
+  // botsing speler 1 tegen speler 2
 if (spelerAX - spelerBX <150 &&
       spelerAX - spelerBX >-150 &&
       spelerAY - spelerBY <50 &&
@@ -60,6 +60,16 @@ else {crash = false;
         console.log ("Geen botsing")
      }
  
+  // botsing spelers tegen schermrand
+if (spelerAX < 75) {crash = true;}
+if (spelerAX > 1200) {crash = true;}
+if (spelerAY < 75) {crash = true;}
+if (spelerAY > 700) {crash = true;}
+if (spelerBX < 75) {crash = true;}
+if (spelerBX > 1200) {crash = true;}
+if (spelerBY < 75) {crash = true;}
+if (spelerBY > 700) {crash = true;}
+  
   // botsing kogel tegen vijand
 
   // update punten en health
@@ -71,6 +81,7 @@ else {crash = false;
 var tekenAlles = function() {
   // achtergrond
   background ("green")
+  
   // vijand
   fill("#000000");
   rect(spelerBX - 75, spelerBY - 25, 150, 50);
@@ -149,9 +160,13 @@ function draw() {
   }
   if (spelStatus === UITLEG) {
     background("#701010");
-    textSize(100);
+    textSize(60);
     fill("white");
-    text("'Uitleg'" ,500 ,300)
+    text("-Player 1 moves with: w, a, s, d" ,200 ,100)
+    text("-Player 2 moves with: up, left, down, right" ,100 ,200)
+    text("-You crash if the car touches the other car" ,100 ,300)
+    text("or the edge of the screen", 300 ,400)
+    textSize(100);
     text("Press shift to start" ,250 ,600)
   }
   if (keyIsDown(16)) {
