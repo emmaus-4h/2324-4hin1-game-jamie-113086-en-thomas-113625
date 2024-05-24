@@ -26,6 +26,7 @@ var spelerBX = 600; // x-positie van speler 2
 var spelerBY = 400; // y-positie van speler 2
 var health = 3;    // health van speler
 var speed = 2;     // snelheid van speler
+var punten = 0;    // aantal punten dat het team heeft behaalds
 var crash = false; // of de speler crasht
 
 /* ********************************************* */
@@ -113,6 +114,8 @@ var tekenAlles = function() {
   fill("white");
   textSize(30);
   text("Health: " + health, 10, 30)
+  text("Punten: " + punten, 10, 60)
+  punten = punten + 1;
 };
 
 /* ********************************************* */
@@ -174,6 +177,7 @@ function draw() {
     spelerAY = 300;
     spelerBX = 600;
     spelerBY = 400;
+    punten = 0;
     spelStatus = SPELEN;
   }
 }
