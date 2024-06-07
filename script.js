@@ -28,6 +28,8 @@ var health = 3;    // health van speler
 var speed = 2;     // snelheid van speler
 var punten = 0;    // aantal punten dat het team heeft behaalds
 var crash = false; // of de speler crasht
+var kogelX = 1200;
+var kogelY = Math.random()*700;
 
 /* ********************************************* */
 /* functies die je gebruikt in je game           */
@@ -37,11 +39,29 @@ var crash = false; // of de speler crasht
  * Updatet globale variabelen met posities van speler, vijanden en kogels
  */
 var beweegAlles = function() {
-  // speler
-
-  // vijand
-
+  // speler 1
+  if (keyIsDown(LEFT_ARROW)) 
+    {spelerAX = spelerAX - speed; }
+  if (keyIsDown(RIGHT_ARROW))
+    {spelerAX = spelerAX + speed;}
+  if (keyIsDown(UP_ARROW))
+    {spelerAY = spelerAY - speed}
+  if (keyIsDown(DOWN_ARROW))
+    {spelerAY = spelerAY + speed}
+  // speler 2
+  if (keyIsDown(65)) 
+    {spelerBX = spelerBX - speed; }
+  if (keyIsDown(68))
+    {spelerBX = spelerBX + speed;}
+  if (keyIsDown(87))
+    {spelerBY = spelerBY - speed}
+  if (keyIsDown(83))
+    {spelerBY = spelerBY + speed}
   // kogel
+  kogelX = kogelX - 5;
+  if (kogelX < 0)
+  {kogelX = 1200; kogelY = Math.random()*700;}
+
 };
 
 /**
@@ -64,15 +84,19 @@ else {crash = false;
   // botsing spelers tegen schermrand
 if (spelerAX < 75) {crash = true;}
 if (spelerAX > 1200) {crash = true;}
-if (spelerAY < 75) {crash = true;}
+if (spelerAY < 25) {crash = true;}
 if (spelerAY > 700) {crash = true;}
 if (spelerBX < 75) {crash = true;}
 if (spelerBX > 1200) {crash = true;}
-if (spelerBY < 75) {crash = true;}
+if (spelerBY < 25) {crash = true;}
 if (spelerBY > 700) {crash = true;}
   
-  // botsing kogel tegen vijand
-
+  // botsing kogel tegen spelers
+  if (spelerAX - kogelX <150 &&
+      spelerAX - kogelX >-150 &&
+      spelerAY - kogelY <50 &&
+      spelerAY - kogelY >-50)
+  {crash = true;}
   // update punten en health
 
 };
@@ -83,32 +107,17 @@ var tekenAlles = function() {
   // achtergrond
   background ("green")
   
-  // vijand
+  // speler 2
   fill("#000000");
   rect(spelerBX - 75, spelerBY - 25, 150, 50);
 
-  if (keyIsDown(65)) 
-    {spelerBX = spelerBX - speed; }
-  if (keyIsDown(68))
-    {spelerBX = spelerBX + speed;}
-  if (keyIsDown(87))
-    {spelerBY = spelerBY - speed}
-  if (keyIsDown(83))
-    {spelerBY = spelerBY + speed}
-  // kogel
-
-  // speler
+  // speler 1
   fill("#4000FF");
   rect(spelerAX - 75, spelerAY - 25, 150, 50);
 
-  if (keyIsDown(LEFT_ARROW)) 
-    {spelerAX = spelerAX - speed; }
-  if (keyIsDown(RIGHT_ARROW))
-    {spelerAX = spelerAX + speed;}
-  if (keyIsDown(UP_ARROW))
-    {spelerAY = spelerAY - speed}
-  if (keyIsDown(DOWN_ARROW))
-    {spelerAY = spelerAY + speed}
+  // kogel
+  fill("Red");
+  ellipse(kogelX, kogelY, 25, 75);
   
   // punten en health
   fill("white");
