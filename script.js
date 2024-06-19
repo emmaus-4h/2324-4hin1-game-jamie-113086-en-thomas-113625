@@ -23,12 +23,11 @@ var spelStatus = UITLEG;
 var spelerAX = 600; // x-positie van speler 1
 var spelerAY = 300; // y-positie van speler 1
 var spelerBX = 600; // x-positie van speler 2
-var spelerBY = 400; // y-positie van speler 2
-var health = 3;    // health van speler
+var spelerBY = 400; // y-positie van speler 
 var speed = 2;     // snelheid van speler
 var punten = 0;    // aantal punten dat het team heeft behaalds
 var crash = false; // of de speler crasht
-var kogelX = 1200;
+var kogelX = 1280;
 var kogelY = Math.random()*700;
 
 /* ********************************************* */
@@ -58,9 +57,9 @@ var beweegAlles = function() {
   if (keyIsDown(83))
     {spelerBY = spelerBY + speed}
   // kogel
-  kogelX = kogelX - 5;
+  kogelX = kogelX - 10;
   if (kogelX < 0)
-  {kogelX = 1200; kogelY = Math.random()*700;}
+  {kogelX = 1280; kogelY = Math.random()*700;}
 
 };
 
@@ -92,10 +91,15 @@ if (spelerBY < 25) {crash = true;}
 if (spelerBY > 700) {crash = true;}
   
   // botsing kogel tegen spelers
-  if (spelerAX - kogelX <150 &&
-      spelerAX - kogelX >-150 &&
-      spelerAY - kogelY <50 &&
-      spelerAY - kogelY >-50)
+  if (spelerAX - kogelX <100 &&
+      spelerAX - kogelX >-75 &&
+      spelerAY - kogelY <125 &&
+      spelerAY - kogelY >-25)
+  {crash = true;}
+  if (spelerBX - kogelX <100 &&
+      spelerBX - kogelX >-75 &&
+      spelerBY - kogelY <125 &&
+      spelerBY - kogelY >-25)
   {crash = true;}
   // update punten en health
 
@@ -117,13 +121,12 @@ var tekenAlles = function() {
 
   // kogel
   fill("Red");
-  ellipse(kogelX, kogelY, 25, 75);
+  rect(kogelX, kogelY, 25, 100);
   
   // punten en health
   fill("white");
   textSize(30);
-  text("Health: " + health, 10, 30)
-  text("Punten: " + punten, 10, 60)
+  text("Punten: " + punten, 10, 30)
   punten = punten + 1;
 };
 
@@ -170,18 +173,31 @@ function draw() {
     spelStatus = UITLEG;
     }
   }
+  if (punten >= 5000) {
+    background("green");
+    textSize(100);
+    fill("white"); 
+    text("You win!!" ,400, 300);
+    text("Press enter to restart", 200, 500);
+    console.log ("game over")
+    // teken game-over scherm
+  if (keyIsDown(ENTER)) {
+    spelStatus = UITLEG;
+    }
+  }
   if (spelStatus === UITLEG) {
     background("#701010");
     textSize(60);
     fill("white");
     text("-Player 1 moves with: w, a, s, d" ,200 ,100)
     text("-Player 2 moves with: up, left, down, right" ,100 ,200)
-    text("-You crash if the car touches the other car" ,100 ,300)
-    text("or the edge of the screen", 300 ,400)
+    text("-You crash if the car touches the other car," ,100 ,300)
+    text("the edge of the screen or any obstacle", 125 ,400)
+    text("-You win if the score goes above 5000", 100 ,500)
     textSize(100);
-    text("Press shift to start" ,250 ,600)
+    text("Press shift to start" ,250 ,650)
   }
-  if (keyIsDown(16)) {
+  if (spelStatus === UITLEG && keyIsDown(16)) {
     spelerAX = 600;
     spelerAY = 300;
     spelerBX = 600;
