@@ -24,11 +24,14 @@ var spelerAX = 600; // x-positie van speler 1
 var spelerAY = 300; // y-positie van speler 1
 var spelerBX = 600; // x-positie van speler 2
 var spelerBY = 400; // y-positie van speler 
-var speed = 2;     // snelheid van speler
+var speedA = 4;     // snelheid van speler 1
+var speedB = 2;     // snelheid van speler 2
 var punten = 0;    // aantal punten dat het team heeft behaalds
 var crash = false; // of de speler crasht
-var kogelX = 1280;
-var kogelY = Math.random()*700;
+var potholeX = 1280;
+var potholeY = Math.random()*700;
+var autoX = 1280;
+var autoY = Math.random()*700;
 
 /* ********************************************* */
 /* functies die je gebruikt in je game           */
@@ -40,26 +43,30 @@ var kogelY = Math.random()*700;
 var beweegAlles = function() {
   // speler 1
   if (keyIsDown(LEFT_ARROW)) 
-    {spelerAX = spelerAX - speed; }
+    {spelerAX = spelerAX - speedA; }
   if (keyIsDown(RIGHT_ARROW))
-    {spelerAX = spelerAX + speed;}
+    {spelerAX = spelerAX + speedA;}
   if (keyIsDown(UP_ARROW))
-    {spelerAY = spelerAY - speed}
+    {spelerAY = spelerAY - speedA}
   if (keyIsDown(DOWN_ARROW))
-    {spelerAY = spelerAY + speed}
+    {spelerAY = spelerAY + speedA}
   // speler 2
   if (keyIsDown(65)) 
-    {spelerBX = spelerBX - speed; }
+    {spelerBX = spelerBX - speedB; }
   if (keyIsDown(68))
-    {spelerBX = spelerBX + speed;}
+    {spelerBX = spelerBX + speedB;}
   if (keyIsDown(87))
-    {spelerBY = spelerBY - speed}
+    {spelerBY = spelerBY - speedB}
   if (keyIsDown(83))
-    {spelerBY = spelerBY + speed}
-  // kogel
-  kogelX = kogelX - 10;
-  if (kogelX < 0)
-  {kogelX = 1280; kogelY = Math.random()*700;}
+    {spelerBY = spelerBY + speedB}
+  // pothole
+  potholeX = potholeX - 10;
+  if (potholeX < 0)
+  {potholeX = 1280; potholeY = Math.random()*700;}
+  // auto
+  autoX = autoX - 3;
+  if (autoX < -150)
+  {autoX = 1280; autoY = Math.random()*700;}
 
 };
 
@@ -70,10 +77,10 @@ var beweegAlles = function() {
  */
 var verwerkBotsing = function() {
   // botsing speler 1 tegen speler 2
-if (spelerAX - spelerBX <150 &&
-      spelerAX - spelerBX >-150 &&
-      spelerAY - spelerBY <50 &&
-      spelerAY - spelerBY >-50)
+if (  spelerAX - spelerBX <125 &&
+      spelerAX - spelerBX >-125 &&
+      spelerAY - spelerBY <45 &&
+      spelerAY - spelerBY >-45 )
   {crash = true;
     console.log ("Botsing"); }
 else {crash = false;
@@ -85,21 +92,32 @@ if (spelerAX < 75) {crash = true;}
 if (spelerAX > 1200) {crash = true;}
 if (spelerAY < 25) {crash = true;}
 if (spelerAY > 700) {crash = true;}
-if (spelerBX < 75) {crash = true;}
-if (spelerBX > 1200) {crash = true;}
+if (spelerBX < 50) {crash = true;}
+if (spelerBX > 1227) {crash = true;}
 if (spelerBY < 25) {crash = true;}
 if (spelerBY > 700) {crash = true;}
   
-  // botsing kogel tegen spelers
-  if (spelerAX - kogelX <100 &&
-      spelerAX - kogelX >-75 &&
-      spelerAY - kogelY <125 &&
-      spelerAY - kogelY >-25)
+  // botsing pothole tegen spelers
+  if (spelerAX - potholeX <100 &&
+      spelerAX - potholeX >-75 &&
+      spelerAY - potholeY <125 &&
+      spelerAY - potholeY >-25)
   {crash = true;}
-  if (spelerBX - kogelX <100 &&
-      spelerBX - kogelX >-75 &&
-      spelerBY - kogelY <125 &&
-      spelerBY - kogelY >-25)
+  if (spelerBX - potholeX <75 &&
+      spelerBX - potholeX >-50 &&
+      spelerBY - potholeY <117 &&
+      spelerBY - potholeY >-17)
+  {crash = true;}
+  // botsing auto tegen spelers
+  if ((spelerAX - autoX <150 &&
+       spelerAX - autoX >-150 &&
+       spelerAY - autoY <50 &&
+       spelerAY - autoY >-50))
+  {crash = true;}
+  if (spelerBX - autoX <127 &&
+      spelerBX - autoX >-127 &&
+      spelerBY - autoY <43 &&
+      spelerBY - autoY >-43)
   {crash = true;}
   // update punten en health
 
@@ -109,21 +127,23 @@ if (spelerBY > 700) {crash = true;}
  */
 var tekenAlles = function() {
   // achtergrond
-  background ("green")
-  
-  // speler 2
-  fill("#000000");
-  rect(spelerBX - 75, spelerBY - 25, 150, 50);
+  background("green");
 
   // speler 1
   fill("#4000FF");
   rect(spelerAX - 75, spelerAY - 25, 150, 50);
+  // speler 2
+  fill("#000000");
+  rect(spelerBX - 50, spelerBY - 17, 100, 35);
 
-  // kogel
+  // pothole
   fill("Red");
-  rect(kogelX, kogelY, 25, 100);
+  rect(potholeX, potholeY, 25, 100);
+  // auto
+  fill("Purple");
+  rect(autoX - 75, autoY - 25, 150, 50);
   
-  // punten en health
+  // punten 
   fill("white");
   textSize(30);
   text("Punten: " + punten, 10, 30)
@@ -144,7 +164,7 @@ function setup() {
   createCanvas(1280, 720);
 
   // Kleur de achtergrond blauw, zodat je het kunt zien
-  background('green');
+  background("green");
 }
 
 /**
@@ -203,6 +223,8 @@ function draw() {
     spelerBX = 600;
     spelerBY = 400;
     punten = 0;
+    potholeX = 1280;
+    autoX = 1280;
     spelStatus = SPELEN;
   }
 }
